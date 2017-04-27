@@ -48,26 +48,14 @@ matrix:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libopencv-dev
-  - sudo add-apt-repository -y ppa:george-edison55/cmake-3.x
-  - sudo apt-get update -y
-  - sudo apt-get install -y cmake
-  - sudo apt-get upgrade -y
-
 
 install:
-  #- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
   - gem install coveralls-lcov	
-  # install latest LCOV (1.9 was failing)
+  # install newer LCOV (1.9 was failing)
   - wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz
   - tar xf lcov_1.11.orig.tar.gz
   - sudo make -C lcov-1.11/ install
-  #- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
-  #- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
-  #- sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 90
-  - sudo apt-get install liblapack-dev libblas-dev libboost-dev #libarmadillo-dev
-  - wget https://sourceforge.net/projects/arma/files/armadillo-7.800.2.tar.xz
-  - tar xf armadillo-7.800.2.tar.xz
-  - cd armadillo-7.800.2 && cmake . && make && sudo make install && cd -
+  - sudo apt-get install liblapack-dev libblas-dev libboost-dev libarmadillo-dev
 
 before_script:
   - lcov --version
