@@ -8,4 +8,10 @@ git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)"
 
 git add --all
 
-git commit --amend  # Will prompt for message.
+# If this script is called with an argument, use that as the amended author
+# EX: ./setup.sh "Author Name <author_email@email.com>"
+if [[ "$1" ]]; then
+	git commit --amend --author="$1"
+else
+	git commit --amend  # Will prompt for message.
+fi
