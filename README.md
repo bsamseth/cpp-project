@@ -9,12 +9,12 @@
 
 This is a boiler plate for C++ projects. What you get:
 
-  - Sources, headers and mains separated in distinct folders
-  - Access to [Google Tests](https://github.com/google/googletest)
-  - Use of [CMake](https://cmake.org/) for much easier compiling
-  - Continuous testing with [Travis-CI](https://travis-ci.org/), with support for C++17.
-  - Code coverage reports, including automatic upload to [Coveralls.io](https://coveralls.io/)
-  - Code documentation with [Doxygen](http://www.stack.nl/~dimitri/doxygen/)
+-   Sources, headers and mains separated in distinct folders
+-   Access to [Google Tests](https://github.com/google/googletest)
+-   Use of [CMake](https://cmake.org/) for much easier compiling
+-   Continuous testing with [Travis-CI](https://travis-ci.org/), with support for C++17.
+-   Code coverage reports, including automatic upload to [Coveralls.io](https://coveralls.io/)
+-   Code documentation with [Doxygen](http://www.stack.nl/~dimitri/doxygen/)
 
 ![Demo of usage](https://i.imgur.com/foymVfy.gif)
 
