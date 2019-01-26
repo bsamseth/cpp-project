@@ -39,5 +39,5 @@ after_success:
   - cd $PARENTDIR/build
   - lcov --list coverage_out.info.cleaned  # Show test report in travis log.
   - coveralls-lcov coverage_out.info.cleaned  # uploads to coveralls
-  - bash <(curl -s https://codecov.io/bash) -f coverage.info.cleaned || echo "Codecov did not collect coverage reports"
+  - bash <(curl -s https://codecov.io/bash) -f coverage_out.info.cleaned || echo "Codecov did not collect coverage reports"
 
