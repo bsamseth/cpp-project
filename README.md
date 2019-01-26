@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/bsamseth/cpp-project.svg?branch=master)](https://travis-ci.org/bsamseth/cpp-project)
 [![Coverage Status](https://coveralls.io/repos/github/bsamseth/cpp-project/badge.svg?branch=master)](https://coveralls.io/github/bsamseth/cpp-project?branch=master)
+[![codecov](https://codecov.io/gh/bsamseth/cpp-project/branch/master/graph/badge.svg)](https://codecov.io/gh/bsamseth/cpp-project)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb004322b0d146239a57eb242078e179)](https://www.codacy.com/app/bsamseth/cpp-project?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bsamseth/cpp-project&amp;utm_campaign=Badge_Grade)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/bsamseth/cpp-project.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bsamseth/cpp-project/context:cpp)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/bsamseth/cpp-project.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bsamseth/cpp-project/alerts/)
@@ -16,7 +17,7 @@ This is a boiler plate for C++ projects. What you get:
 -   Access to [Google Tests](https://github.com/google/googletest)
 -   Use of [CMake](https://cmake.org/) for much easier compiling
 -   Continuous testing with [Travis-CI](https://travis-ci.org/), with support for C++17.
--   Code coverage reports, including automatic upload to [Coveralls.io](https://coveralls.io/)
+-   Code coverage reports, including automatic upload to [Coveralls.io](https://coveralls.io/) and/or [Codecov.io](https://codecov.io)
 -   Code documentation with [Doxygen](http://www.stack.nl/~dimitri/doxygen/)
 
 ![Demo of usage](https://i.imgur.com/foymVfy.gif)
@@ -76,10 +77,10 @@ with the addition of ignoring the build directory (`build/`).
 
 ## Services
 
-If repository is activated with Travis-CI, then unit tests will be built and executed on each commit.
+If the repository is activated with Travis-CI, then unit tests will be built and executed on each commit.
 
-If repository is activated with Coveralls, then deployment to Travis will also calculate code coverage and
-upload this to Coveralls.io. 
+If the repository is activated with Coveralls/Codecov, then deployment to Travis will also calculate code coverage and
+upload this to Coveralls.io and/or Codecov.io
 
 ## Setup
 When starting a new project, you probably don't want the history of this repository. To start fresh you can use
