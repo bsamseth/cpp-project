@@ -5,29 +5,21 @@ notifications:
   email: false
 
 addons:
+  sources:
+    - ubuntu-toolchain-r-test
   apt:
-    packages: lcov
-
-before_install:
-  # C++17
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
+    packages: 
+      - lcov
+      - g++7
 
 install: 
-  # C++17
-  - sudo apt-get install -qq g++-7
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-  - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-7 90
-
   # Install coverals gem for uploading coverage to coveralls.
   - gem install coveralls-lcov
 
 before_script:
-  - lcov --version
-  - gcov --version
-  - g++ --version
+  - export CXX=g++7
   - PARENTDIR=$(pwd)
-  - mkdir $PARENTDIR/build && cd $PARENTDIR/build
+  - mkdir $PARENTDIR/build
 
 script:
   - cd $PARENTDIR/build
@@ -40,4 +32,3 @@ after_success:
   - lcov --list coverage_out.info.cleaned  # Show test report in travis log.
   - coveralls-lcov coverage_out.info.cleaned  # uploads to coveralls
   - bash <(curl -s https://codecov.io/bash) -f coverage_out.info.cleaned || echo "Codecov did not collect coverage reports"
-
