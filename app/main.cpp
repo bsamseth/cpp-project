@@ -18,7 +18,7 @@ int main() {
             << "."
             << PROJECT_VERSION_TWEAK
             << std::endl;
-  std::system("cat ../LICENCE");
+  std::system("cat ../LICENSE");
 
   // Bring in the dummy class from the example source,
   // just to show that it is accessible from main.cpp.
