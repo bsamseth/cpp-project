@@ -3,6 +3,8 @@ dist: xenial
 notifications:
   email: false
 
+# Define builds on mulitple OS/compiler combinations. 
+# Feel free to keep only one of these.
 matrix:
   include:
     - os: linux
@@ -15,6 +17,57 @@ matrix:
             - g++-7
       env:
         - CXX_COMPILER="g++-7"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - lcov
+            - g++-8
+      env:
+        - CXX_COMPILER="g++-8"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-5.0
+          packages:
+            - lcov
+            - clang-5.0
+      env:
+        - CXX_COMPILER="clang-5.0"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-10.0
+          packages:
+            - lcov
+            - clang-10.0
+      env:
+        - CXX_COMPILER="clang-10.0"
+    
+    - os: osx
+      osx_image: xcode10.1
+      addons:
+        homebrew:
+          packages:
+          - lcov
+      env:
+        - CXX_COMPILER="clang"
+    
+    - os: osx
+      osx_image: xcode9.4
+      addons:
+        homebrew:
+          packages:
+          - lcov
+      env:
+        - CXX_COMPILER="clang"
+
 
 before_install:
   - PARENTDIR=$(pwd)
