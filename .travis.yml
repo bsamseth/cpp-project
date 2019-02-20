@@ -10,14 +10,14 @@ addons:
   apt:
     packages: 
       - lcov
-      - g++7
+      - g++-7
 
 install: 
   # Install coverals gem for uploading coverage to coveralls.
   - gem install coveralls-lcov
 
 before_script:
-  - export CXX=g++7
+  - export CXX=g++-7
   - PARENTDIR=$(pwd)
   - mkdir $PARENTDIR/build
 
