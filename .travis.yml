@@ -1,34 +1,37 @@
 language: cpp
-compiler: gcc
 dist: xenial
 notifications:
   email: false
 
-addons:
-  sources:
-    - ubuntu-toolchain-r-test
-  apt:
-    packages: 
-      - lcov
-      - g++-7
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - lcov
+            - g++-7
+      env:
+        - CXX_COMPILER="g++-7"
 
-install: 
-  # Install coverals gem for uploading coverage to coveralls.
-  - gem install coveralls-lcov
-
-before_script:
-  - export CXX=g++-7
+before_install:
   - PARENTDIR=$(pwd)
   - mkdir $PARENTDIR/build
 
-script:
+install: 
   - cd $PARENTDIR/build
-  - cmake -DCMAKE_BUILD_TYPE=Coverage $PARENTDIR
+  - cmake $PARENTDIR -DCMAKE_BUILD_TYPE=Coverage -DCMAKE_CXX_COMPILER=$CXX_COMPILER
   - make
+
+script:
   - make coverage
 
 after_success:
   - cd $PARENTDIR/build
   - lcov --list coverage_out.info.cleaned  # Show test report in travis log.
+  # Install coverals gem for uploading coverage to coveralls.
+  - gem install coveralls-lcov
   - coveralls-lcov coverage_out.info.cleaned  # uploads to coveralls
   - bash <(curl -s https://codecov.io/bash) -f coverage_out.info.cleaned || echo "Codecov did not collect coverage reports"
