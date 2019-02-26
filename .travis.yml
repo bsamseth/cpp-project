@@ -22,33 +22,23 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-5
           packages:
             - lcov
-            - g++-8
+            - clang-5
       env:
-        - CXX_COMPILER="g++-8"
+        - CXX_COMPILER="clang-5"
     - os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-5.0
+            - llvm-toolchain-xenial-8
           packages:
             - lcov
-            - clang-5.0
+            - clang-8
       env:
-        - CXX_COMPILER="clang-5.0"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-10.0
-          packages:
-            - lcov
-            - clang-10.0
-      env:
-        - CXX_COMPILER="clang-10.0"
+        - CXX_COMPILER="clang-8"
     
     - os: osx
       osx_image: xcode10.1
