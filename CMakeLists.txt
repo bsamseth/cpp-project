@@ -51,7 +51,7 @@ target_link_libraries(main.x PRIVATE engine)  # Link the executable to `engine` 
 target_compile_options(engine PRIVATE 
                            # clang/GCC warnings
                            $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>: 
-                           "-Wall -Wextra" >
+                           "-Wall" "-Wextra" >
                            # MSVC warnings
                            $<$<CXX_COMPILER_ID:MSVC>: 
                            "/Wall" >
