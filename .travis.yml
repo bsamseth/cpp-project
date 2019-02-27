@@ -17,17 +17,7 @@ matrix:
             - g++-7
       env:
         - CXX_COMPILER="g++-7"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-5
-          packages:
-            - lcov
-            - clang-5
-      env:
-        - CXX_COMPILER="clang-5"
+
     - os: linux
       addons:
         apt:
@@ -39,7 +29,17 @@ matrix:
             - clang-8
       env:
         - CXX_COMPILER="clang-8"
-    
+
+    - os: osx
+      osx_image: xcode8
+      addons:
+        homebrew:
+          packages:
+          - lcov
+          - gcc7
+      env:
+        - CXX_COMPILER="g++-7"
+
     - os: osx
       osx_image: xcode10.1
       addons:
@@ -49,17 +49,9 @@ matrix:
       env:
         - CXX_COMPILER="clang"
     
-    - os: osx
-      osx_image: xcode9.4
-      addons:
-        homebrew:
-          packages:
-          - lcov
-      env:
-        - CXX_COMPILER="clang"
-
 
 before_install:
+  - eval "${MATRIX_EVAL}"
   - PARENTDIR=$(pwd)
   - mkdir $PARENTDIR/build
 
