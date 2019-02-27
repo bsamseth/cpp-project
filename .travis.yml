@@ -4,7 +4,7 @@ notifications:
   email: false
 
 # Define builds on mulitple OS/compiler combinations. 
-# Feel free to keep only one of these.
+# Feel free to add/remove entries from this list.
 matrix:
   include:
     - os: linux
@@ -17,23 +17,6 @@ matrix:
             - g++-7
       env:
         - MATRIX_EVAL="CXX_COMPILER=g++-7"
-
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-xenial-8
-          packages:
-            - lcov
-            - clang-8
-      env:
-        - MATRIX_EVAL="CXX_COMPILER=clang++-8"
-
-    - os: osx
-      osx_image: xcode8
-      env:
-        - MATRIX_EVAL="brew install gcc6 lcov && CXX_COMPILER=g++6"
 
     - os: osx
       osx_image: xcode10.1
