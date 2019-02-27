@@ -28,7 +28,7 @@ matrix:
             - lcov
             - clang-8
       env:
-        - CXX_COMPILER="clang-8"
+        - CXX_COMPILER="clang++-8"
 
     - os: osx
       osx_image: xcode8
@@ -36,9 +36,9 @@ matrix:
         homebrew:
           packages:
           - lcov
-          - gcc7
+          - gcc6
       env:
-        - CXX_COMPILER="g++-7"
+        - CXX_COMPILER="g++6"
 
     - os: osx
       osx_image: xcode10.1
@@ -47,7 +47,7 @@ matrix:
           packages:
           - lcov
       env:
-        - CXX_COMPILER="clang"
+        - CXX_COMPILER="clang++"
     
 
 before_install:
