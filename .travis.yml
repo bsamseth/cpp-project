@@ -16,7 +16,7 @@ matrix:
             - lcov
             - g++-7
       env:
-        - CXX_COMPILER="g++-7"
+        - MATRIX_EVAL="CXX_COMPILER=g++-7"
 
     - os: linux
       addons:
@@ -28,17 +28,12 @@ matrix:
             - lcov
             - clang-8
       env:
-        - CXX_COMPILER="clang++-8"
+        - MATRIX_EVAL="CXX_COMPILER=clang++-8"
 
     - os: osx
       osx_image: xcode8
-      addons:
-        homebrew:
-          packages:
-          - lcov
-          - gcc6
       env:
-        - CXX_COMPILER="g++6"
+        - MATRIX_EVAL="brew install gcc6 lcov && CXX_COMPILER=g++6"
 
     - os: osx
       osx_image: xcode10.1
@@ -47,7 +42,7 @@ matrix:
           packages:
           - lcov
       env:
-        - CXX_COMPILER="clang++"
+        - MATRIX_EVAL="CXX_COMPILER=clang++"
     
 
 before_install:
