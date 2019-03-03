@@ -16,7 +16,7 @@ matrix:
             - lcov
             - g++-7
       env:
-        - MATRIX_EVAL="CXX_COMPILER=g++-7"
+        - MATRIX_EVAL="CXX_COMPILER=g++-7; sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-7 90"
 
     - os: osx
       osx_image: xcode10.1
