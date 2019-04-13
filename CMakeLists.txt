@@ -22,33 +22,26 @@ include(Colors)
 # --------------------------------------------------------------------------------
 #                         Locate files (change as needed).
 # --------------------------------------------------------------------------------
-set(SOURCES 
+set(SOURCES          # All .cpp files in src/
     src/example.cpp
 )
-set(TESTFILES
-    tests/dummy.cpp
+set(TESTFILES        # All .cpp files in tests/
     tests/main.cpp
 )
+set(LIBRARY_NAME engine1)  # Default name for the library built from src/*.cpp (change if you wish)
 
 # --------------------------------------------------------------------------------
 #                            Build! (Change as needed)
 # --------------------------------------------------------------------------------
-# Compile all sources into a library. Called engine here (change if you wish).
-add_library(engine ${SOURCES})
+# Compile all sources into a library.
+add_library(${LIBRARY_NAME} ${SOURCES})
 
-# Engine needs its header files, and users of the library must also see these (PUBLIC). (No change needed)
-target_include_directories(engine 
-    PUBLIC ${PROJECT_SOURCE_DIR}/include
-)
-
-# Add an executable for the file main.cpp, here called main.x.
-# If you add more executables, copy these lines accordingly.
-add_executable(main.x app/main.cpp)   # Name of exec. and location of file.
-target_link_libraries(main.x PRIVATE engine)  # Link the executable to `engine` (if it uses it).
+# Lib needs its header files, and users of the library must also see these (PUBLIC). (No change needed)
+target_include_directories(${LIBRARY_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 # Set the compile options you want, possibly depending on compiler (change as needed).
 # Do similar for the executables if you wish to set options for them as well.
-target_compile_options(engine PRIVATE 
+target_compile_options(${LIBRARY_NAME} PRIVATE 
                            # clang/GCC warnings
                            $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>: 
                            "-Wall" "-Wextra" >
@@ -57,38 +50,24 @@ target_compile_options(engine PRIVATE
                            "/Wall" >
 )
 
-# Set the properties you require, e.g. what C++ standard to use (change as needed).
-set_target_properties(engine main.x PROPERTIES 
-    CXX_STANDARD 17 
-    CXX_STANDARD_REQUIRED YES 
-    CXX_EXTENSIONS NO
+# Add an executable for the file app/main.cpp.
+# If you add more executables, copy these lines accordingly.
+add_executable(main app/main.cpp)   # Name of exec. and location of file.
+target_link_libraries(main PRIVATE ${LIBRARY_NAME})  # Link the executable to library (if it uses it).
+
+# Set the properties you require, e.g. what C++ standard to use. Here applied to library and main.x (change as needed).
+set_target_properties(
+    ${LIBRARY_NAME} main 
+      PROPERTIES 
+        CXX_STANDARD 17 
+        CXX_STANDARD_REQUIRED YES 
+        CXX_EXTENSIONS NO
 )
 
-# --------------------------------------------------------------------------------
-#                         Make Tests (no change needed).
-# --------------------------------------------------------------------------------
-set(TEST_MAIN unit_tests.x)  # Default name for test executable (change if you wish).
 
-# Add a make target 'gtest', that runs the tests (and builds all dependencies).
-# The setup of Google Test is done at the very end of this file.
-add_executable(${TEST_MAIN} ${TESTFILES})
-target_link_libraries(${TEST_MAIN} googletest engine pthread)
-add_custom_target(gtest 
-    COMMAND "${PROJECT_BINARY_DIR}/${TEST_MAIN}"
-    DEPENDS ${TEST_MAIN})
+# Set up tests (see tests/CMakeLists.txt).
+add_subdirectory(tests)
 
-
-# Add a standard make target 'test' that runs the tests under CTest (only as an alt. to gtest).
-include(CTest)
-enable_testing()
-add_test(unit_tests ${PROJECT_BINARY_DIR}/${TEST_MAIN})
-
-# --------------------------------------------------------------------------------
-#                         Code Coverage (no change needed).
-# --------------------------------------------------------------------------------
-# If CMake aborts due to missing dependencies for code coverage 
-# (gcov, lcov, genhtml and supported compiler), comment this line.
-include(CodeCoverage)
 
 # --------------------------------------------------------------------------------
 #                         Documentation (no change needed).
@@ -104,32 +83,6 @@ if(DOXYGEN_FOUND)
         COMMENT "${BoldMagenta}Generating API documentation with Doxygen (open ./html/index.html to view).${ColourReset}" VERBATIM
     )
 endif(DOXYGEN_FOUND)
-
-
-# --------------------------------------------------------------------------------
-#                         Google Test (no change needed).
-# --------------------------------------------------------------------------------
-# The following makes sure that an up-to-date version of googletest is available,
-# and built so that it may be used by your tests. 
-add_custom_target(git_update
-    COMMAND git submodule init
-    COMMAND git submodule update
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-)
-add_library( googletest
-    ${PROJECT_SOURCE_DIR}/external/googletest/src/gtest-all.cc
-    ${PROJECT_SOURCE_DIR}/external/googletest/src/gtest_main.cc
-)
-target_include_directories(googletest 
-    PUBLIC ${PROJECT_SOURCE_DIR}/external/googletest/include 
-           ${PROJECT_SOURCE_DIR}/external/googletest
-)
-add_dependencies(googletest git_update)
-set_source_files_properties(
-    ${PROJECT_SOURCE_DIR}/external/googletest/src/gtest-all.cc  
-    ${PROJECT_SOURCE_DIR}/external/googletest/src/gtest_main.cc
-    PROPERTIES GENERATED 1
-)
 
 
 # --------------------------------------------------------------------------------
