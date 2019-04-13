@@ -1,5 +1,4 @@
-#ifndef EXAMPLE_H
-#define EXAMPLE_H
+#pragma once
 
 /**
  * This is a dummy class to demonstrate features of the boiler plate.
@@ -18,4 +17,3 @@ class Dummy {
   bool doSomething();
 };
 
-#endif
