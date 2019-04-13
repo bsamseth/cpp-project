@@ -19,6 +19,7 @@ include(ConfigSafeGuards)
 include(Colors)
 include(Documentation)
 include(Misc)
+include(Warnings)
 
 
 # --------------------------------------------------------------------------------
@@ -41,16 +42,12 @@ add_library(${LIBRARY_NAME} ${SOURCES})
 # Lib needs its header files, and users of the library must also see these (PUBLIC). (No change needed)
 target_include_directories(${LIBRARY_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-# Set the compile options you want, possibly depending on compiler (change as needed).
-# Do similar for the executables if you wish to set options for them as well.
-target_compile_options(${LIBRARY_NAME} PRIVATE 
-                           # clang/GCC warnings
-                           $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>: 
-                           "-Wall" "-Wextra" >
-                           # MSVC warnings
-                           $<$<CXX_COMPILER_ID:MSVC>: 
-                           "/Wall" >
-)
+# Set the compile options you want (change as needed).
+# Either use helper function, or supply your own explicitly.
+option(ENABLE_WARNINGS_SETTINGS "Allow target_set_warnings to add flags and defines.
+                                 Set this to OFF if you want to provide your own warning parameters." ON)
+target_set_warnings(${LIBRARY_NAME} ENABLE ALL AS_ERROR ALL DISABLE Annoying)
+# target_compile_options(${LIBRARY_NAME} ... )  # For setting manually.
 
 # Add an executable for the file app/main.cpp.
 # If you add more executables, copy these lines accordingly.
@@ -65,7 +62,6 @@ set_target_properties(
         CXX_STANDARD_REQUIRED YES 
         CXX_EXTENSIONS NO
 )
-
 
 # Set up tests (see tests/CMakeLists.txt).
 add_subdirectory(tests)
