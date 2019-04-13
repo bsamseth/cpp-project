@@ -17,6 +17,8 @@ project(CPP_BOILERPLATE VERSION 1.2.3.4 LANGUAGES CXX)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 include(ConfigSafeGuards)
 include(Colors)
+include(Documentation)
+include(Misc)
 
 
 # --------------------------------------------------------------------------------
@@ -28,7 +30,7 @@ set(SOURCES          # All .cpp files in src/
 set(TESTFILES        # All .cpp files in tests/
     tests/main.cpp
 )
-set(LIBRARY_NAME engine1)  # Default name for the library built from src/*.cpp (change if you wish)
+set(LIBRARY_NAME engine)  # Default name for the library built from src/*.cpp (change if you wish)
 
 # --------------------------------------------------------------------------------
 #                            Build! (Change as needed)
@@ -67,37 +69,3 @@ set_target_properties(
 
 # Set up tests (see tests/CMakeLists.txt).
 add_subdirectory(tests)
-
-
-# --------------------------------------------------------------------------------
-#                         Documentation (no change needed).
-# --------------------------------------------------------------------------------
-# Add a make target 'doc' to generate API documentation with Doxygen.
-# You should set options to your liking in the file 'Doxyfile.in'.
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-    add_custom_target(doc 
-        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile &> doxygen.log
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "${BoldMagenta}Generating API documentation with Doxygen (open ./html/index.html to view).${ColourReset}" VERBATIM
-    )
-endif(DOXYGEN_FOUND)
-
-
-# --------------------------------------------------------------------------------
-#                            Misc (no change needed).
-# --------------------------------------------------------------------------------
-# Have CMake parse the config file, generating the config header, with
-# correct definitions. Here only used to make version number available to
-# the source code. Include "exampleConfig.h" (no .in suffix) in the source.
-configure_file (
-  "${PROJECT_SOURCE_DIR}/include/exampleConfig.h.in"
-  "${PROJECT_BINARY_DIR}/exampleConfig.h"
-)
-# add the binary tree to the search path for include files
-# so that we will find exampleConfig.h
-include_directories("${PROJECT_BINARY_DIR}")
-
-# Ask CMake to output a compile_commands.json file for use with things like Vim YCM.
-set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
