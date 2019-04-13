@@ -13,14 +13,22 @@ cmake_minimum_required(VERSION 3.8.2)
 project(CPP_BOILERPLATE VERSION 1.2.3.4 LANGUAGES CXX)
 
 
+# Options: Things you can set via commandline options to cmake (e.g. -DENABLE_LTO=[ON|OFF])
+option(ENABLE_WARNINGS_SETTINGS "Allow target_set_warnings to add flags and defines.
+                                 Set this to OFF if you want to provide your own warning parameters." ON)
+option(ENABLE_LTO "Enable link time optimization" ON)
+
 # Include stuff. No change needed.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 include(ConfigSafeGuards)
 include(Colors)
 include(Documentation)
+include(LTO)
 include(Misc)
 include(Warnings)
 
+# Check for LTO support.
+find_lto(CXX)
 
 # --------------------------------------------------------------------------------
 #                         Locate files (change as needed).
@@ -43,9 +51,6 @@ add_library(${LIBRARY_NAME} ${SOURCES})
 target_include_directories(${LIBRARY_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 # Set the compile options you want (change as needed).
-# Either use helper function, or supply your own explicitly.
-option(ENABLE_WARNINGS_SETTINGS "Allow target_set_warnings to add flags and defines.
-                                 Set this to OFF if you want to provide your own warning parameters." ON)
 target_set_warnings(${LIBRARY_NAME} ENABLE ALL AS_ERROR ALL DISABLE Annoying)
 # target_compile_options(${LIBRARY_NAME} ... )  # For setting manually.
 
@@ -53,6 +58,7 @@ target_set_warnings(${LIBRARY_NAME} ENABLE ALL AS_ERROR ALL DISABLE Annoying)
 # If you add more executables, copy these lines accordingly.
 add_executable(main app/main.cpp)   # Name of exec. and location of file.
 target_link_libraries(main PRIVATE ${LIBRARY_NAME})  # Link the executable to library (if it uses it).
+target_enable_lto(main optimized)  # enable link-time-optimization if available for non-debug configurations
 
 # Set the properties you require, e.g. what C++ standard to use. Here applied to library and main.x (change as needed).
 set_target_properties(
