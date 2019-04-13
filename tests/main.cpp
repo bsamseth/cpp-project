@@ -1,8 +1,5 @@
-// Bring in gtest
-#include <gtest/gtest.h>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
-// Run all the tests that were declared with TEST()
-int main(int argc, char **argv){
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+// This is all that is needed to compile a test-runner executable.
+// More tests can be added here, or in a new tests/*.cpp file.

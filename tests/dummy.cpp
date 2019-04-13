@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
-
+#include "doctest.h"
 #include "example.h"
 
-TEST(Dummy, example) {
-  Dummy d = Dummy();
-  ASSERT_TRUE(d.doSomething());
+TEST_CASE("dummies always return true")
+{
+  Dummy d;
+  CHECK(d.doSomething() == true);
 }
