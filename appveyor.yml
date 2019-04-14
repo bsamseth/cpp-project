@@ -39,5 +39,8 @@ build:
   verbosity: minimal
   
 test_script:
-  - cmake --build build --target test
+  - cd build
+  - set CTEST_OUTPUT_ON_FAILURE=1
+  - ctest
+  - cd ..
 
