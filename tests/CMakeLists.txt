@@ -27,9 +27,10 @@ set_target_properties(${TEST_MAIN} PROPERTIES
     CXX_EXTENSIONS NO
 )
 
-add_custom_target(test 
-    COMMAND ${PROJECT_BINARY_DIR}/${TEST_MAIN} ${TEST_RUNNER_PARAMS}
-    DEPENDS ${TEST_MAIN})
+add_test(
+    # Use some per-module/project prefix so that it is easier to run only tests for this module
+    NAME ${LIBRARY_NAME}.${TEST_MAIN}
+    COMMAND ${TEST_MAIN} ${TEST_RUNNER_PARAMS})
 
 # Adds a 'coverage' target.
 include(CodeCoverage)
