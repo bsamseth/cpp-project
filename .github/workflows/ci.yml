@@ -41,8 +41,13 @@ jobs:
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
         
     - name: configure
-      run: mkdir build && cd build && cmake ..
+      run: |
+        mkdir build
+        cd build
+        cmake ..
     - name: build
       run: cmake --build build
     - name: test
-      run: cd build && ctest
+      run: |
+        cd build
+        ctest
