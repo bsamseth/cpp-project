@@ -1,66 +1,42 @@
 name: CI
-on: push
+
+on: [push]
 
 jobs:
-  build:
-    strategy:
-        matrix:
-          cc: [ gcc, clang ]
+  build-ubuntu:
+
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@master
-        with:
-          submodules: recursive
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          cc: ${{ matrix.cc }}
-  coverage:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          coverage: codecov
-  valgrind:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          ctestflags: '-D ExperimentalMemCheck'
-  clang-sanitizers:
-    name: build with clang -fsanitize
-    strategy:
-        matrix:
-          cflags:
-            - -fsanitize=address
-            - -fsanitize=memory
-            - -fsanitize=undefined
-            - -fsanitize=dataflow
-            - -fsanitize=safe-stack
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          cc: clang
-          cflags: ${{ matrix.cflags }}
-  clang-format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          analyzer: clang-format
-  clang-analyzers:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          analyzer: clang-tidy
-  omnilint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/omnilint:latest
+    - uses: actions/checkout@v2
+    - name: Checkout submodules
+      shell: bash
+      run: |
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        
+    - name: configure
+      run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=coverage ..
+    - name: build
+      run: cmake --build build
+    - name: test
+      run: make test
+    - name: coverage
+      run: make coverage
+
+#   build-windows:
+
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       matrix:
+#         os: [windows-latest, windows-2016]
+    
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: configure
+#       run: mkdir build && cd build && cmake ..
+#     - name: build
+#       run: cmake --build build --config Debug
+#     - name: test
+#       run: cd build && ctest
