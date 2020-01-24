@@ -50,4 +50,5 @@ jobs:
     - name: test
       run: |
         cd build
-        ctest
+        set CTEST_OUTPUT_ON_FAILURE=1
+        ctest -C Debug 
