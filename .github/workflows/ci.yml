@@ -17,13 +17,12 @@ jobs:
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
         
     - name: configure
-      run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=coverage ..
+      run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=debug ..
     - name: build
       run: cmake --build build
     - name: test
       run: make test
-    - name: coverage
-      run: make coverage
+
 
 #   build-windows:
 
