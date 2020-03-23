@@ -88,8 +88,8 @@ upload this to Coveralls.io and/or Codecov.io
 When starting a new project, you probably don't want the history of this repository. To start fresh you can use
 the [setup script](setup.sh) as follows:
 ``` bash
-> git clone https://github.com/bsamseth/cpp-project  # Or use ssh-link if you like.
+> git clone --recurse-submodules https://github.com/bsamseth/cpp-project  # Or use ssh-link if you like.
 > cd cpp-project
-> sh setup.sh
+> bash setup.sh
 ```
 The result is a fresh Git repository with one commit adding all files from the boiler plate. 
