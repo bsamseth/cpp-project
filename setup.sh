@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # Revert to first commit, add and commit everything as single commit.
-git reset "$(git rev-list --max-parents=0 --abbrev-commit HEAD)"
-
-git add --all
+git reset $(git commit-tree HEAD^{tree} -m "Bolier plate for C++ project added")
 
 name=$(git config user.name)
 email=$(git config user.email)
