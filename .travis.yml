@@ -24,6 +24,8 @@ matrix:
         homebrew:
           packages:
           - lcov
+          update: true
+
       env:
         - MATRIX_EVAL="CXX_COMPILER=clang++"
     
