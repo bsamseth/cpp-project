@@ -15,42 +15,42 @@ jobs:
         toolchain:
           - linux-gcc
           - macos-clang
+          - windows-msvc
 
         include:
           - toolchain: linux-gcc
             os: ubuntu-latest
+            compiler: gcc
 
           - toolchain: macos-clang
             os: macos-latest
+            compiler: clang
+
+          - toolchain: windows-msvc
+            os: windows-latest
+            compiler: msvc
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v2
       with:
           submodules: true
-    - name: configure
-      run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=debug ..
-    - name: build
-      run: cmake --build build
-    - name: test
-      run: cd build && ctest
 
-
-  build-windows:
-
-    runs-on: windows-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-      with:
-          submodules: true
-    - name: configure
+    - name: Configure (Debug)
       run: |
         mkdir build
         cd build
-        cmake ..
-    - name: build
+        cmake -DCMAKE_BUILD_TYPE=debug ..
+
+    - name: Build with ${{ matrix.compiler }}
       run: cmake --build build
-    - name: test
+
+    - name: Test (Unix)
+      if: startsWith(runner.os, 'Windows') == false
+      run: cd build && ctest
+
+    - name: Test (Windows)
+      if: startsWith(runner.os, 'Windows')
       run: |
         cd build
         set CTEST_OUTPUT_ON_FAILURE=1
