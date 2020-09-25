@@ -17,6 +17,10 @@ jobs:
           - macos-clang
           - windows-msvc
 
+        configuration:
+          - Debug
+          - Release
+
         include:
           - toolchain: linux-gcc
             os: ubuntu-latest
@@ -36,22 +40,18 @@ jobs:
       with:
           submodules: true
 
-    - name: Configure (Debug)
+    - name: Configure (${{ matrix.configuration }})
       run: |
         mkdir build
         cd build
-        cmake -DCMAKE_BUILD_TYPE=debug ..
+        cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
 
     - name: Build with ${{ matrix.compiler }}
       run: cmake --build build
 
-    - name: Test (Unix)
-      if: startsWith(runner.os, 'Windows') == false
-      run: cd build && ctest
-
-    - name: Test (Windows)
-      if: startsWith(runner.os, 'Windows')
+    - name: Test
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
       run: |
         cd build
-        set CTEST_OUTPUT_ON_FAILURE=1
-        ctest -C Debug
+        ctest -C ${{ matrix.configuration }}
