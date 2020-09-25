@@ -5,8 +5,22 @@ on: [push]
 jobs:
   build-ubuntu:
 
-    runs-on: ubuntu-latest
-    
+    name: ${{ matrix.toolchain }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        toolchain:
+          - linux-gcc
+          - macos-clang
+
+        include:
+          - toolchain: linux-gcc
+            os: ubuntu-latest
+
+          - toolchain: macos-clang
+            os: macos-latest
+
     steps:
     - uses: actions/checkout@v2
       with:
@@ -38,4 +52,4 @@ jobs:
       run: |
         cd build
         set CTEST_OUTPUT_ON_FAILURE=1
-        ctest -C Debug 
+        ctest -C Debug
