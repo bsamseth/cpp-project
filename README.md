@@ -106,4 +106,3 @@ the [setup script](setup.sh) as follows:
 > bash setup.sh
 ```
 The result is a fresh Git repository with one commit adding all files from the boiler plate. 
-
