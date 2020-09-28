@@ -42,17 +42,13 @@ jobs:
           submodules: true
 
     - name: Configure (${{ matrix.configuration }})
-      run: |
-        mkdir build
-        cd build
-        cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
+      run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
 
     - name: Build with ${{ matrix.compiler }}
       run: cmake --build build
 
     - name: Test
+      working-directory: build
       env:
         CTEST_OUTPUT_ON_FAILURE: 1
-      run: |
-        cd build
-        ctest -C ${{ matrix.configuration }}
+      run: ctest -C ${{ matrix.configuration }}
