@@ -19,8 +19,6 @@ jobs:
 
         configuration:
           - Debug
-          # TODO: To be enabled in the future
-          # - Release
 
         include:
           - toolchain: linux-gcc
