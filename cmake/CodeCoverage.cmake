@@ -98,10 +98,10 @@ if (cmake_build_type_tolower STREQUAL "coverage")
 
 
     # Check prereqs
-    fund_program(GCOV_PATH gcov)
-    fund_program(LCOV_PATH lcov)
-    fund_program(GENHTML_PATH genhtml)
-    fund_program(GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
+    find_program(GCOV_PATH gcov)
+    find_program(LCOV_PATH lcov)
+    find_program(GENHTML_PATH genhtml)
+    find_program(GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
 
     if(NOT GCOV_PATH)
         message(FATAL_ERROR "gcov not found! Aborting...")
