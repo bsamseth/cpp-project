@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Revert to first commit, add and commit everything as single commit.
-git reset $(git commit-tree HEAD^{tree} -m "Bolier plate for C++ project added")
+git reset $(git commit-tree HEAD^{tree} -m "Boiler plate for C++ project added")
 
 name=$(git config user.name)
 email=$(git config user.email)
