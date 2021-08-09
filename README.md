@@ -11,7 +11,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/bsamseth/cpp-project.svg)](http://isitmaintained.com/project/bsamseth/cpp-project "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/bsamseth/cpp-project.svg)](http://isitmaintained.com/project/bsamseth/cpp-project "Percentage of issues still open")
 
-# Boiler plate for C++ projects 
+# Boiler plate for C++ projects
 
 This is a boiler plate for C++ projects. What you get:
 
@@ -36,21 +36,21 @@ This is a boiler plate for C++ projects. What you get:
 ├── src
 │   └── example.cpp
 └── tests
-    ├── dummy.cpp
-    └── main.cpp
+    ├── googletests.cpp
+    └── main_googletest.cpp
 ```
 
 Sources go in [src/](src/), header files in [include/](include/), main programs in [app/](app), and
-tests go in [tests/](tests/) (compiled to `unit_tests` by default). 
+tests go in [tests/](tests/) (compiled to `unit_tests` by default).
 
-If you add a new executable, say `app/hello.cpp`, you only need to add the following two lines to [CMakeLists.txt](CMakeLists.txt): 
+If you add a new executable, say `app/hello.cpp`, you only need to add the following two lines to [CMakeLists.txt](CMakeLists.txt):
 
 ``` cmake
 add_executable(main app/main.cpp)   # Name of exec. and location of file.
 target_link_libraries(main PRIVATE ${LIBRARY_NAME})  # Link the executable to lib built from src/*.cpp (if it uses it).
 ```
 
-You can find the example source code that builds the `main` executable in [app/main.cpp](app/main.cpp) under the `Build` section in [CMakeLists.txt](CMakeLists.txt). 
+You can find the example source code that builds the `main` executable in [app/main.cpp](app/main.cpp) under the `Build` section in [CMakeLists.txt](CMakeLists.txt).
 If the executable you made does not use the library in [src/](src), then only the first line is needed.
 
 
@@ -104,4 +104,4 @@ the [setup script](setup.sh) as follows:
 > cd cpp-project
 > bash setup.sh
 ```
-The result is a fresh Git repository with one commit adding all files from the boiler plate. 
+The result is a fresh Git repository with one commit adding all files from the boiler plate.
