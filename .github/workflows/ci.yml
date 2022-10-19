@@ -41,7 +41,7 @@ jobs:
       run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
 
     - name: Build with ${{ matrix.compiler }}
-      run: cmake --build build
+      run: cmake --build build --config ${{ matrix.configuration }}
 
     - name: Test
       working-directory: build
