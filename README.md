@@ -45,7 +45,7 @@ tests go in [tests/](tests/) (compiled to `unit_tests` by default).
 
 If you add a new executable, say `app/hello.cpp`, you only need to add the following two lines to [CMakeLists.txt](CMakeLists.txt):
 
-``` cmake
+```cmake
 add_executable(main app/main.cpp)   # Name of exec. and location of file.
 target_link_libraries(main PRIVATE ${LIBRARY_NAME})  # Link the executable to lib built from src/*.cpp (if it uses it).
 ```
@@ -61,14 +61,14 @@ Build by making a build directory (i.e. `build/`), run `cmake` in that dir, and 
 
 Example:
 
-``` bash
-> mkdir build && cd build
-> cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
-> make
-> ./main
-> make test      # Makes and runs the tests.
-> make coverage  # Generate a coverage report.
-> make doc       # Generate html documentation.
+```bash
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
+make
+./main
+make test      # Makes and runs the tests.
+make coverage  # Generate a coverage report.
+make doc       # Generate html documentation.
 ```
 
 ## .gitignore
@@ -93,8 +93,8 @@ Click the `Use this template` button to make a new repository from this template
 When starting a new project, you probably don't want the history of this repository. To start fresh you can use
 the [setup script](setup.sh) as follows:
 ``` bash
-> git clone https://github.com/bsamseth/cpp-project  # Or use ssh-link if you like.
-> cd cpp-project
-> bash setup.sh
+git clone https://github.com/bsamseth/cpp-project  # Or use ssh-link if you like.
+cd cpp-project
+bash setup.sh
 ```
 The result is a fresh Git repository with one commit adding all files from the boiler plate.
